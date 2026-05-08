@@ -11,26 +11,17 @@ import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Interface gráfica do Simulador de Algoritmos de Substituição de Páginas.
- * Layout:
- *   [NORTE]  painel de entrada — string de referência, nº de quadros, botão Simular
- *   [CENTRO] painel do gráfico — gráfico de barras atualizado após cada simulação
- * Algoritmos que retornam -1 (não implementados) são ignorados no gráfico.
- */
 public class SimulatorGUI extends JFrame {
 
-    // Campos de entrada mantidos como variáveis de instância para o listener do botão acessá-los.
     private final JTextField referenceStringField;
     private final JTextField frameCountField;
 
-    // Painel central que contém o gráfico; substituído a cada execução da simulação.
     private JPanel chartContainer;
 
     public SimulatorGUI() {
         super("Simulador de Algoritmos de Substituição de Páginas");
 
-        // ── Painel de Entrada (NORTE) ────────────────────────────────────────
+        // ── Painel de Entrada
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
         inputPanel.add(new JLabel("String de Referência (separada por vírgulas):"));
@@ -44,12 +35,12 @@ public class SimulatorGUI extends JFrame {
         JButton simulateButton = new JButton("Simular");
         inputPanel.add(simulateButton);
 
-        // ── Contêiner do Gráfico (CENTRO) ────────────────────────────────────
+        // ── Contêiner do Gráfico
         // Começa vazio; substituído pelo gráfico após a primeira simulação.
         chartContainer = new JPanel(new BorderLayout());
         chartContainer.add(new JLabel("Pressione Simular para ver os resultados.", SwingConstants.CENTER));
 
-        // ── Montagem da Janela ───────────────────────────────────────────────
+        // ── Montagem da Janela
         setLayout(new BorderLayout());
         add(inputPanel,     BorderLayout.NORTH);
         add(chartContainer, BorderLayout.CENTER);
@@ -58,7 +49,7 @@ public class SimulatorGUI extends JFrame {
         setSize(800, 500);
         setLocationRelativeTo(null); // centraliza na tela
 
-        // ── Ação do Botão ────────────────────────────────────────────────────
+        // ── Ação do Botão
         simulateButton.addActionListener(e -> runSimulation());
     }
 
@@ -107,6 +98,7 @@ public class SimulatorGUI extends JFrame {
 
             // Adiciona ao dataset: addValue(valor, série, categoria)
             dataset.addValue(result, "Faltas de Página", name);
+            System.out.println("Método " + name + " - " + result + " faltas de página");
             anyImplemented = true;
         }
 
@@ -139,7 +131,7 @@ public class SimulatorGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Todo trabalho de UI Swing deve ocorrer na Event Dispatch Thread.
+        // Swing
         SwingUtilities.invokeLater(() -> new SimulatorGUI().setVisible(true));
     }
 }

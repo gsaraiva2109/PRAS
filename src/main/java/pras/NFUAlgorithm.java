@@ -1,16 +1,5 @@
 package pras;
 
-/**
- * NFU (Not Frequently Used) — Substituição da Página Menos Frequentemente Usada.
- *
- * Estratégia: cada página na memória possui um contador de software que acumula
- * quantas vezes ela foi referenciada. Ao ocorrer uma falta, descartar a página
- * com o MENOR contador (menos frequentemente usada).
- *
- * Implementação usa dois arrays paralelos do mesmo tamanho:
- *   frames[]   — qual página ocupa cada slot (-1 = vazio)
- *   counters[] — contador de referências para a página em cada slot
- */
 public class NFUAlgorithm implements PageReplacementAlgorithm {
 
     @Override
@@ -19,14 +8,14 @@ public class NFUAlgorithm implements PageReplacementAlgorithm {
         int[] frames   = new int[memoryFrames]; // número da página em cada slot
         int[] counters = new int[memoryFrames]; // contagem de referências por slot
 
-        // Inicializa todos os slots como vazios.
+        // Inicia todos os slots vazios
         java.util.Arrays.fill(frames, -1);
 
         int pageFaults = 0;
 
         for (int page : referenceString) {
 
-            // Busca a página nos quadros atuais.
+            // Busca a página nos slots atuais
             int hitSlot = -1;
             for (int i = 0; i < memoryFrames; i++) {
                 if (frames[i] == page) {
@@ -36,15 +25,15 @@ public class NFUAlgorithm implements PageReplacementAlgorithm {
             }
 
             if (hitSlot != -1) {
-                // Acerto: incrementa o contador desta página (ela acabou de ser referenciada).
+                // Acerto incrementa o contador dessa página
                 counters[hitSlot]++;
                 continue; // sem falta
             }
 
-            // --- FALTA DE PÁGINA ---
+            // FALTA DE PÁGINA
             pageFaults++;
 
-            // Procura um slot vazio primeiro (fase de preenchimento inicial).
+            // Procura um slot vazio primeiro
             int targetSlot = -1;
             for (int i = 0; i < memoryFrames; i++) {
                 if (frames[i] == -1) {
@@ -54,7 +43,7 @@ public class NFUAlgorithm implements PageReplacementAlgorithm {
             }
 
             if (targetSlot == -1) {
-                // Sem slot vazio: descartar a página com MENOR contador (menos usada).
+                // Tudo ocupado: descartar a página menos usada
                 int minCount = Integer.MAX_VALUE;
                 for (int i = 0; i < memoryFrames; i++) {
                     if (counters[i] < minCount) {
@@ -62,12 +51,11 @@ public class NFUAlgorithm implements PageReplacementAlgorithm {
                         targetSlot = i; // este slot contém a vítima LFU
                     }
                 }
-                // Zera o contador do slot descartado antes de reutilizá-lo.
+                // Zera o contador do slot descartado
                 counters[targetSlot] = 0;
             }
 
-            // Carrega a página faltante no slot escolhido.
-            // Contador começa em 0 (esta referência conta a partir do próximo acesso).
+            // Carrega a página no slot
             frames[targetSlot]   = page;
             counters[targetSlot] = 0;
         }

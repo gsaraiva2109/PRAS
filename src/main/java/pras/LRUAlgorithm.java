@@ -2,15 +2,33 @@ package pras;
 
 import java.util.LinkedList;
 
-/**
- * LRU (Least Recently Used) — Substituição da Página Menos Recentemente Usada.
- * TODO: implementar por Gustavo
- */
 public class LRUAlgorithm implements PageReplacementAlgorithm {
 
     @Override
     public int calculatePageFaults(int[] referenceString, int memoryFrames) {
-        // Ainda não implementado
-        return -1;
+        // A lista é a ordem de uso
+        // Início (0): página usada há mais tempo
+        // Fim: página usada mais recentemente
+        LinkedList<Integer> frames = new LinkedList<>();
+        int pageFaults = 0;
+
+        for (int page : referenceString) {
+            if (frames.contains(page)) {
+                // Acerto move para o final para marcar como usado recentement
+                frames.remove(Integer.valueOf(page));
+                frames.add(page);
+            } else {
+                // Falta de Página
+                pageFaults++;
+                if (frames.size() == memoryFrames) {
+                    // Remove a página menos usada recentemente
+                    frames.removeFirst();
+                }
+                // Adiciona página ao final
+                frames.add(page);
+            }
+        }
+
+        return pageFaults;
     }
 }
