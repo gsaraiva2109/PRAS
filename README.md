@@ -73,3 +73,6 @@ ORACLE. **Java Documentation**. Disponível em: https://docs.oracle.com/en/java/
 SDPM. **Page Replacement Algorithms Simulation**. Disponível em: https://sdpm-simulator.netlify.app/. Acesso em: 07 mai. 2026.
 
 DEVMEDIA. **Introdução à Interface GUI no Java**. Disponível em: https://www.devmedia.com.br/introducao-a-interface-gui-no-java/25646. Acesso em: 08 mai. 2026.
+
+# PROJETO NO GITHUB:
+- [Clique aqui (Github)](https://github.com/gsaraiva2109/PRAS) - Github do projeto.
