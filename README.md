@@ -1,63 +1,75 @@
-# PRAS — Simulador de Algoritmos de Substituição de Páginas
+# Algoritmos de Substituição de Páginas
 
-Projeto universitário em Java que simula os principais algoritmos de substituição de páginas da memória virtual e exibe uma comparação visual via gráfico de barras.
+- Autor 1: Gustavo Chaves Macêdo.
+- Autor 2: Gabriel Saraiva.
 
-## Algoritmos
+---
 
-| Algoritmo | Responsável | Status |
-|-----------|-------------|--------|
-| FIFO      | (Gabriel)   | ✅ Implementado |
-| NFU       | (Gabriel)   | ✅ Implementado |
-| LRU       | (Gustavo)   | 🔲 Pendente |
-| Ótimo     | (Gustavo)   | 🔲 Pendente |
+## Resumo
+Esse projeto apresenta o desenvolvimento de um simulador de gerenciamento de memória virtual e na análise de desempenho de algoritmos de substituição de páginas. Foram implementados os algoritmos FIFO, LRU, NFU e Ótimo, com o objetivo é medir a eficiência de cada algororítimo através da contagem de faltas de página.
 
-> Algoritmos pendentes retornam `-1` e são ignorados na simulação até serem implementados.
+---
 
-## Requisitos
+## 1. Introdução
+O gerenciamento de memória virtual permite que processos executem utilizando mais memória do que a disponível fisicamente. No entanto, quando uma página necessária não está na RAM, ocorre uma *falta de página*. A escolha de qual página remover para dar lugar à nova é extremamente importante. Esse simulador explora essa problemática, comparando quatro abordagens para otimização do sistema operacional.
 
-- Java 25+
-- Maven 3.6+
+## 2. Metodologia
+O simulador foi desenvolvido em **Java**, utilizando os seguintes componentes:
+- **Lógica de Negócio:** Interface `PageReplacementAlgorithm` para padronização básica.
+- **Interface Gráfica:** Java Swing para entrada de dados e JFreeChart para geração de gráficos.
+- **Entrada:** Cadeia de referências (inteiros) e número de quadros disponíveis.
 
-## Como executar
+### Algoritmos Implementados:
+1.  **FIFO (First-In First-Out):** Substitui a página mais antiga na memória.
+2.  **LRU (Least Recently Used):** Substitui a página não usada há mais tempo.
+3.  **NFU (Not Frequently Used):** Substitui a página com menor frequência de uso (contador de acessos).
+4.  **Ótimo (OPT):** Substitui a página que será usada mais tarde no futuro, ou seja, demorará mais tempo para ser utilizada novamente.
 
-```bash
-# Compilar
-mvn compile
+---
 
-# Rodar direto via Maven
-mvn exec:java -Dexec.mainClass=pras.SimulatorGUI
+## 3. Resultados e Discussão
+Ao executar os algorítimos, o sistema gera uma saída no console e um gráfico de barras comparativo.
 
-# Ou gerar o JAR e rodar
-mvn package -DskipTests
-java -cp "target/pras-1.0.jar:$(mvn dependency:build-classpath -q -DforceStdout)" pras.SimulatorGUI
+**Exemplo de Saída no Console:**
+```text
+Método FIFO - 15 faltas de página.
+Método LRU - 12 faltas de página.
+Método Ótimo - 9 faltas de página.
+Método NFU - 14 faltas de página.
 ```
 
-## Estrutura do projeto
+O gráfico permite visualizar a "Anomalia de Belady" em alguns cenários e como o algoritmo Ótimo sempre estabelece o limite inferior de faltas de página, servindo como métrica de excelência para os demais.
 
-```
-PRAS/
-├── pom.xml
-└── src/main/java/pras/
-    ├── PageReplacementAlgorithm.java   ← interface comum
-    ├── FIFOAlgorithm.java              ← First-In, First-Out
-    ├── LRUAlgorithm.java               ← Least Recently Used (pendente)
-    ├── OptimalAlgorithm.java           ← Algoritmo Ótimo de Belady (pendente)
-    ├── NFUAlgorithm.java               ← Not Frequently Used
-    └── SimulatorGUI.java               ← Interface gráfica Swing + JFreeChart
-```
+---
 
-## Entrada
+## 4. Conclusão
+O simulador cumpre os requisitos acadêmicos, demonstrando que algoritmos que consideram o histórico de uso (LRU) tendem a ser mais eficientes que abordagens simples (FIFO). A implementação do algoritmo Ótimo comprova que, embora impraticável em sistemas reais, sua previsibilidade é essencial para o estudo teórico da eficiência de gerenciamento de memória.
 
-- **String de referência**: sequência de números de páginas separados por vírgula (ex: `7,0,1,2,0,3,0,4`)
-- **Número de quadros**: quantidade de quadros de página disponíveis na memória física
+---
 
-## Exemplo clássico (Belady)
+## Como Executar
+1. Certifique-se de ter o **JDK 21** instalado.
+2. Compile o projeto (via Maven ou IDE):
+   ```bash
+   mvn clean compile
+   ```
+3. Execute a classe principal:
+   ```bash
+   java -cp target/classes:target/dependency/* pras.SimulatorGUI
+   ```
 
-String: `7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1` — Quadros: `3`
+## Tecnologias Utilizadas
+- [Java](https://www.oracle.com/java/) - Linguagem principal.
+- [Swing](https://docs.oracle.com/javase/tutorial/uiswing/) - Interface gráfica.
+- [JFreeChart](https://www.jfree.org/jfreechart/) - Geração de gráficos comparativos.
+- [Maven](https://maven.apache.org/) - Gerenciamento de dependências.
 
-| Algoritmo | Faltas de Página |
-|-----------|-----------------|
-| FIFO      | 15              |
-| LRU       | 12              |
-| Ótimo     | 9               |
-| NFU       | (variável)      |
+---
+
+# Referências
+
+ORACLE. **Java Documentation**. Disponível em: https://docs.oracle.com/en/java/. Acesso em: 30 abril. 2026.
+
+SDPM. **Page Replacement Algorithms Simulation**. Disponível em: https://sdpm-simulator.netlify.app/. Acesso em: 07 mai. 2026.
+
+DEVMEDIA. **Introdução à Interface GUI no Java**. Disponível em: https://www.devmedia.com.br/introducao-a-interface-gui-no-java/25646. Acesso em: 08 mai. 2026.
