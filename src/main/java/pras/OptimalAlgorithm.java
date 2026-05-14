@@ -8,20 +8,20 @@ public class OptimalAlgorithm implements PageReplacementAlgorithm {
     @Override
     public int calcularPageFaults(int[] referencias, int quadros) {
         List<Integer> frames = new ArrayList<>();
-        int pageFaults = 0;
+        int faltaDePaginas = 0;
 
         for (int i = 0; i < referencias.length; i++) {
             int page = referencias[i];
 
             if (!frames.contains(page)) {
                 // Falta de Página
-                pageFaults++;
+                faltaDePaginas++;
 
                 if (frames.size() < quadros) {
                     frames.add(page);
                 } else {
                     // Memória cheia, decidir qual página substituir
-                    int victimIndex = -1;
+                    int indexRemove = -1;
                     int furthestUse = -1;
 
                     for (int j = 0; j < frames.size(); j++) {
@@ -37,21 +37,21 @@ public class OptimalAlgorithm implements PageReplacementAlgorithm {
                         }
 
                         if (nextUse == Integer.MAX_VALUE) {
-                            victimIndex = j;
+                            indexRemove = j;
                             break;
                         }
 
                         if (nextUse > furthestUse) {
                             furthestUse = nextUse;
-                            victimIndex = j;
+                            indexRemove = j;
                         }
                     }
                     // Substitui
-                    frames.set(victimIndex, page);
+                    frames.set(indexRemove, page);
                 }
             }
         }
 
-        return pageFaults;
+        return faltaDePaginas;
     }
 }

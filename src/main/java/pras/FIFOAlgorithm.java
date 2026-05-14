@@ -13,7 +13,7 @@ public class FIFOAlgorithm implements PageReplacementAlgorithm {
         // final da fila = mais recente
         Queue<Integer> frames = new LinkedList<>();
 
-        int pageFaults = 0;
+        int faltaDePaginas = 0;
 
         for (int page : referencias) {
 
@@ -23,7 +23,7 @@ public class FIFOAlgorithm implements PageReplacementAlgorithm {
             }
 
             // Falta de página
-            pageFaults++;
+            faltaDePaginas++;
 
             if (frames.size() == quadros) {
                 frames.poll();
@@ -32,6 +32,6 @@ public class FIFOAlgorithm implements PageReplacementAlgorithm {
             frames.add(page);
         }
 
-        return pageFaults;
+        return faltaDePaginas;
     }
 }

@@ -10,7 +10,7 @@ public class LRUAlgorithm implements PageReplacementAlgorithm {
         // Início (0): página usada há mais tempo
         // Fim: página usada mais recentemente
         LinkedList<Integer> frames = new LinkedList<>();
-        int pageFaults = 0;
+        int faltaDePaginas = 0;
 
         for (int page : referencias) {
             if (frames.contains(page)) {
@@ -19,7 +19,7 @@ public class LRUAlgorithm implements PageReplacementAlgorithm {
                 frames.add(page);
             } else {
                 // Falta de Página
-                pageFaults++;
+                faltaDePaginas++;
                 if (frames.size() == quadros) {
                     // Remove a página menos usada recentemente
                     frames.removeFirst();
@@ -29,6 +29,6 @@ public class LRUAlgorithm implements PageReplacementAlgorithm {
             }
         }
 
-        return pageFaults;
+        return faltaDePaginas;
     }
 }

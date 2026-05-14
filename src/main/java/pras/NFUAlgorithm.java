@@ -11,7 +11,7 @@ public class NFUAlgorithm implements PageReplacementAlgorithm {
         // Inicia todos os slots vazios
         java.util.Arrays.fill(frames, -1);
 
-        int pageFaults = 0;
+        int faltaDePaginas = 0;
 
         for (int page : referencias) {
 
@@ -31,7 +31,7 @@ public class NFUAlgorithm implements PageReplacementAlgorithm {
             }
 
             // FALTA DE PÁGINA
-            pageFaults++;
+            faltaDePaginas++;
 
             // Procura um slot vazio primeiro
             int targetSlot = -1;
@@ -60,6 +60,6 @@ public class NFUAlgorithm implements PageReplacementAlgorithm {
             counters[targetSlot] = 0;
         }
 
-        return pageFaults;
+        return faltaDePaginas;
     }
 }
