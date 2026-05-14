@@ -6,18 +6,18 @@ import java.util.List;
 public class OptimalAlgorithm implements PageReplacementAlgorithm {
 
     @Override
-    public int calculatePageFaults(int[] referenceString, int memoryFrames) {
+    public int calcularPageFaults(int[] referencias, int quadros) {
         List<Integer> frames = new ArrayList<>();
         int pageFaults = 0;
 
-        for (int i = 0; i < referenceString.length; i++) {
-            int page = referenceString[i];
+        for (int i = 0; i < referencias.length; i++) {
+            int page = referencias[i];
 
             if (!frames.contains(page)) {
                 // Falta de Página
                 pageFaults++;
 
-                if (frames.size() < memoryFrames) {
+                if (frames.size() < quadros) {
                     frames.add(page);
                 } else {
                     // Memória cheia, decidir qual página substituir
@@ -29,8 +29,8 @@ public class OptimalAlgorithm implements PageReplacementAlgorithm {
                         int nextUse = Integer.MAX_VALUE;
 
                         // Qual a próxima vez que esta página será usada?
-                        for (int k = i + 1; k < referenceString.length; k++) {
-                            if (referenceString[k] == currentPage) {
+                        for (int k = i + 1; k < referencias.length; k++) {
+                            if (referencias[k] == currentPage) {
                                 nextUse = k;
                                 break;
                             }

@@ -6,7 +6,7 @@ import java.util.Queue;
 public class FIFOAlgorithm implements PageReplacementAlgorithm {
 
     @Override
-    public int calculatePageFaults(int[] referenceString, int memoryFrames) {
+    public int calcularPageFaults(int[] referencias, int quadros) {
 
         // é as páginas atualmente na memória
         // frente da fila = mais antiga
@@ -15,9 +15,9 @@ public class FIFOAlgorithm implements PageReplacementAlgorithm {
 
         int pageFaults = 0;
 
-        for (int page : referenceString) {
+        for (int page : referencias) {
 
-            // Verifica pagina carregada
+            // Verifica se a pagina carregada
             if (frames.contains(page)) {
                 continue;
             }
@@ -25,12 +25,10 @@ public class FIFOAlgorithm implements PageReplacementAlgorithm {
             // Falta de página
             pageFaults++;
 
-            if (frames.size() == memoryFrames) {
-                // Memória cheia remove a mais antiga
+            if (frames.size() == quadros) {
                 frames.poll();
             }
 
-            // Carrega pagina
             frames.add(page);
         }
 
